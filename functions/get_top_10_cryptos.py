@@ -14,7 +14,7 @@ def get_top_10_cryptos():
             f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false&api_key={api_key}"
         )
         response.raise_for_status()
-        data = response.json()
+        data = response.json() if len(response.json()) > 0 else "error"
         return data
     except requests.exceptions.HTTPError as errh:
         print("Http Error:", errh)
