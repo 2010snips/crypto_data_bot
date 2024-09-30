@@ -9,7 +9,6 @@ from functions.display_top_10_cryptos import display_top_10_cryptos
 
 load_dotenv()
 
-api_key = os.getenv("CG_KEY")
 bot_key = os.getenv("BOT_KEY")
 
 app = ApplicationBuilder().token(bot_key).build()

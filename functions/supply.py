@@ -1,6 +1,6 @@
-from get_crypto_data import get_crypto_data
 from telegram import Update
 from telegram.ext import ContextTypes
+from functions.get_crypto_data import get_crypto_data
 
 # command to get the circulating and total supply of a cryptocurrency
 async def supply(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:

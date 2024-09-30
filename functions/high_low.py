@@ -1,4 +1,4 @@
-from functions.get_top_10_cryptos import get_top_10_cryptos
+from functions.get_crypto_data import get_crypto_data
 from telegram import Update
 from telegram.ext import ContextTypes
 
@@ -6,7 +6,7 @@ from telegram.ext import ContextTypes
 async def high_low(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # get the crypto name from the message
     crypto = update.message.text.split()[1]
-    data = get_top_10_cryptos(crypto)
+    data = get_crypto_data(crypto)
 
     if data:
         await update.message.reply_text(

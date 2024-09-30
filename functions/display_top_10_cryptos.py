@@ -1,4 +1,4 @@
-from get_top_10_cryptos import get_top_10_cryptos
+from functions.get_top_10_cryptos import get_top_10_cryptos
 from telegram import Update
 from telegram.ext import ContextTypes
 
