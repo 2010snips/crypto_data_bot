@@ -28,7 +28,7 @@ application.add_handler(CommandHandler("supply", supply))
 application.add_handler(CommandHandler("top10", display_top_10_cryptos))
 
 
-@app.route("/", methods=["POST"])
+@app.route("/webhook", methods=["POST"])
 
 def webhook():
     update = Update.de_json(request.get_json(force=True), application.bot)
