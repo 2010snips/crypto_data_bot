@@ -26,16 +26,16 @@ application.add_handler(CommandHandler("highlow", high_low))
 application.add_handler(CommandHandler("supply", supply))
 application.add_handler(CommandHandler("top10", display_top_10_cryptos))
 
-@app.route('/webhook', methods=['POST'])
+
+@app.route("/", methods=["POST"])
+
 def webhook():
     update = Update.de_json(request.get_json(force=True), application.bot)
     application.bot.process_new_updates([update])
-    return 'ok'
+    return "ok"
 
-if __name__ == '__main__':
-    # Set webhook URL (make sure to replace <your-app-name> with your actual Koyeb app name)
-    application.bot.set_webhook(url='https://sweet-ronica-eniitan-be83931d.koyeb.app/')
 
-    # Run Flask app on port 8000
-    app.run(host='0.0.0.0', port=8000)
+if __name__ == "__main__":
+    application.bot.set_webhook(url="https://sweet-ronica-eniitan-be83931d.koyeb.app/")
 
+    app.run(host="0.0.0.0", port=8000)
