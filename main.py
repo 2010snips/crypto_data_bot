@@ -29,9 +29,7 @@ application.add_handler(CommandHandler("top10", display_top_10_cryptos))
 
 
 @app.route("/webhook", methods=["POST"])
-
-def webhook():
+async def webhook():
     update = Update.de_json(request.get_json(force=True), application.bot)
-    asyncio.run(application.update_queue.put([update]))
+    await application.update_queue.put(update)
     return "ok"
-
