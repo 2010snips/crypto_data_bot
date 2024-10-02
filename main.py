@@ -31,7 +31,7 @@ application.add_handler(CommandHandler("top10", display_top_10_cryptos))
 
 def webhook():
     update = Update.de_json(request.get_json(force=True), application.bot)
-    application.bot.process_new_updates([update])
+    application.update_queue.put([update])
     return "ok"
 
 
