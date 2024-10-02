@@ -2,4 +2,4 @@ python-telegram-bot
 Flask[async]
 requests
 python-dotenv
-gunicorn
+hypercorn
