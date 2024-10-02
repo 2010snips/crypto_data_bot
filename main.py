@@ -48,8 +48,12 @@ application.add_handler(CommandHandler("top10", display_top_10_cryptos))
 async def webhook():
     json_data = request.get_json()
     chat_id, text = message_parser(json_data)
-    replyText(chat_id, text)
+    if text == "/start":
+        replyText(chat_id, "Hi from Eniitan")
+    else:
+        replyText(chat_id, text)
     return "ok"
+
 
 # async def webhook():
 #     print("recieved")
