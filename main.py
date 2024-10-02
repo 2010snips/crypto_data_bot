@@ -10,6 +10,7 @@ from functions.display_top_10_cryptos import display_top_10_cryptos
 from flask import Flask, request
 from dotenv import load_dotenv
 import asyncio
+import requests
 
 load_dotenv()
 
@@ -19,6 +20,21 @@ app = Flask(__name__)
 
 # Create Telegram application
 application = ApplicationBuilder().token(bot_key).build()
+
+
+def replyText(chat_id, text):
+    url = f"https://api.telegram.org/bot{bot_key}/sendMessage"
+    payload = {"chat_id": chat_id, "text": text}
+    response = requests.post(url, json=payload)
+    return response
+
+
+def message_parser(message):
+    chat_id = message["message"]["chat"]["id"]
+    text = message["message"]["text"]
+    print(f"message: {text}")
+    return chat_id, text
+
 
 # Command handlers
 application.add_handler(CommandHandler("start", start))
@@ -30,8 +46,14 @@ application.add_handler(CommandHandler("top10", display_top_10_cryptos))
 
 @app.route("/webhook", methods=["POST"])
 async def webhook():
-    print("recieved")
-    json_data = request.get_json(force=True)
-    update = Update.de_json(json_data, application.bot)
-    await application.update_queue.put(update)
+    json_data = request.get_json()
+    chat_id, text = message_parser(json_data)
+    replyText(chat_id, text)
     return "ok"
+
+# async def webhook():
+#     print("recieved")
+#     json_data = request.get_json(force=True)
+#     update = Update.de_json(json_data, application.bot)
+#     await application.update_queue.put(update)
+#     return "ok"
