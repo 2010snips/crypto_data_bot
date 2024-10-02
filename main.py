@@ -9,6 +9,7 @@ from functions.supply import supply
 from functions.display_top_10_cryptos import display_top_10_cryptos
 from flask import Flask, request
 from dotenv import load_dotenv
+import asyncio
 
 load_dotenv()
 
@@ -31,11 +32,9 @@ application.add_handler(CommandHandler("top10", display_top_10_cryptos))
 
 def webhook():
     update = Update.de_json(request.get_json(force=True), application.bot)
-    application.update_queue.put([update])
+    asyncio.run(application.update_queue.put([update]))
     return "ok"
 
 
 if __name__ == "__main__":
-    application.bot.set_webhook(url="https://sweet-ronica-eniitan-be83931d.koyeb.app/")
-
     app.run(host="0.0.0.0", port=8000)
