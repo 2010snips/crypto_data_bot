@@ -8,7 +8,7 @@ async def data(chat_id: str, crypto: str) -> None:
     if data:
         await reply_text(
             chat_id,
-            f'The current price of {crypto} is ${data["current_price"]}. The price change in the last 24 hours is {data["price_change_percentage_24h"]}%.\nThe market cap is ${data["market_cap"]}.\nThe total volume in the last 24 hours is ${data["total_volume"]}.',
+            f'The current price of *{crypto}* is *${data["current_price"]}*. The price change in the last 24 hours is {data["price_change_percentage_24h"]}%.\nThe market cap is ${data["market_cap"]}.\nThe total volume in the last 24 hours is ${data["total_volume"]}.',
         )
     else:
         await reply_text(chat_id, f"Sorry, data on {crypto} isn't available right now")
