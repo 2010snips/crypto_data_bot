@@ -3,7 +3,7 @@ from functions.reply_text import reply_text
 
 
 async def data(chat_id: str, crypto: str) -> None:
-    data = get_crypto_data(crypto)
+    data = await get_crypto_data(crypto)
 
     if data:
         await reply_text(

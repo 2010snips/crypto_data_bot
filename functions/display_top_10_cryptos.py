@@ -3,7 +3,7 @@ from functions.reply_text import reply_text
 
 
 async def display_top_10_cryptos(chat_id: str) -> None:
-    data: list = get_top_10_cryptos()
+    data: list = await get_top_10_cryptos()
 
     if data:
         message = "*Here are the top 10 cryptocurrencies according to CoinGecko:*\n\n"

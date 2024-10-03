@@ -3,7 +3,7 @@ from functions.reply_text import reply_text
 
 
 async def high_low(chat_id: str, crypto: str) -> None:
-    data: dict = get_crypto_data(crypto)
+    data: dict = await get_crypto_data(crypto)
 
     if data:
         await reply_text(
