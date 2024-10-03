@@ -40,7 +40,7 @@ async def webhook():
         start(chat_id)
     elif text == "/top10":
         display_top_10_cryptos(chat_id)
-    elif len(message == 2):
+    elif len(message) == 2:
         command = message[0]
         query = message[1]
 
