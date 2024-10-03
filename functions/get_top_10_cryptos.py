@@ -15,7 +15,7 @@ async def get_top_10_cryptos() -> list | None:
             ) as response:
                 response.raise_for_status()
 
-                data: list = response.json()
+                data: list = await response.json()
 
                 # because sometimes it returns an empty list
                 if data:

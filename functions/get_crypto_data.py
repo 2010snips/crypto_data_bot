@@ -15,7 +15,7 @@ async def get_crypto_data(crypto: str) -> dict | None:
             ) as response:
                 response.raise_for_status()
 
-                data: dict = response.json()[0]
+                data: dict = await response.json()[0]
 
                 # because sometimes it returns an empty list
                 if data:
