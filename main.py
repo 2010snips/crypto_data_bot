@@ -1,5 +1,4 @@
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler
+from telegram.ext import ApplicationBuilder
 from dotenv import load_dotenv
 import os
 from functions.start import start
@@ -9,8 +8,7 @@ from functions.supply import supply
 from functions.display_top_10_cryptos import display_top_10_cryptos
 from flask import Flask, request
 from dotenv import load_dotenv
-import asyncio
-import requests
+from functions.reply_text import reply_text
 
 load_dotenv()
 
@@ -19,14 +17,7 @@ bot_key = os.getenv("BOT_KEY")
 app = Flask(__name__)
 
 # Create Telegram application
-application = ApplicationBuilder().token(bot_key).build()
-
-
-def replyText(chat_id, text):
-    url = f"https://api.telegram.org/bot{bot_key}/sendMessage"
-    payload = {"chat_id": chat_id, "text": text}
-    response = requests.post(url, json=payload)
-    return response
+ApplicationBuilder().token(bot_key).build()
 
 
 def message_parser(message):
@@ -36,28 +27,30 @@ def message_parser(message):
     return chat_id, text
 
 
-# Command handlers
-application.add_handler(CommandHandler("start", start))
-application.add_handler(CommandHandler("data", data))
-application.add_handler(CommandHandler("highlow", high_low))
-application.add_handler(CommandHandler("supply", supply))
-application.add_handler(CommandHandler("top10", display_top_10_cryptos))
+wrong_command_message = "wrong command"
 
 
 @app.route("/webhook", methods=["POST"])
 async def webhook():
     json_data = request.get_json()
     chat_id, text = message_parser(json_data)
+    message: list = text.split()
+
     if text == "/start":
-        replyText(chat_id, "Hi from Eniitan")
+        start(chat_id)
+    elif text == "/top10":
+        display_top_10_cryptos(chat_id)
+    elif len(message == 2):
+        command = message[0]
+        query = message[1]
+
+        if command == "/data":
+            data(chat_id, query)
+        elif command == "/highlow":
+            high_low(chat_id, query)
+        elif command == "/supply":
+            supply(chat_id, query)
+
     else:
-        replyText(chat_id, text)
+        reply_text(chat_id, wrong_command_message)
     return "ok"
-
-
-# async def webhook():
-#     print("recieved")
-#     json_data = request.get_json(force=True)
-#     update = Update.de_json(json_data, application.bot)
-#     await application.update_queue.put(update)
-#     return "ok"

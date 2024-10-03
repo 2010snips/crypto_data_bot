@@ -6,8 +6,6 @@ load_dotenv()
 
 api_key = os.getenv("CG_KEY")
 
-
-# Function to fetch cryptocurrency data
 def get_crypto_data(crypto: str) -> dict | None:
     try:
         response = requests.get(

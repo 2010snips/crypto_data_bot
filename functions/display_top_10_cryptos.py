@@ -1,19 +1,17 @@
 from functions.get_top_10_cryptos import get_top_10_cryptos
-from telegram import Update
-from telegram.ext import ContextTypes
+from functions.reply_text import reply_text
 
 
-# command to get the top 10 cryptocurrencies
-async def display_top_10_cryptos(
-    update: Update, context: ContextTypes.DEFAULT_TYPE
-) -> None:
+async def display_top_10_cryptos(chat_id: str) -> None:
     data: list = get_top_10_cryptos()
+
     if data:
         message = "*Here are the top 10 cryptocurrencies according to CoinGecko:*\n\n"
         for i, crypto in enumerate(data, start=1):
             message += f'{i}. *{crypto["name"]}* ({crypto["symbol"].upper()}):\n- Current price is ${crypto["current_price"]}\n- Market cap is ${crypto["market_cap"]}\n- Total volume in the last 24 hours is ${crypto["total_volume"]}\n\n'
-        await update.message.reply_text(message, parse_mode="Markdown")
+        reply_text(chat_id, message)
     else:
-        await update.message.reply_text(
-            "Sorry, I could not fetch the data for the top 10 cryptocurrencies. Please try again later."
+        reply_text(
+            chat_id,
+            "Sorry, I could not fetch the data for the top 10 cryptocurrencies. Please try again later.",
         )

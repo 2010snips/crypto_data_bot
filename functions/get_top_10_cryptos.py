@@ -7,7 +7,6 @@ load_dotenv()
 api_key = os.getenv("CG_KEY")
 
 
-# Function to fetch top 10 cryptocurrencies
 def get_top_10_cryptos() -> list | None:
     try:
         response = requests.get(

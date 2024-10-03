@@ -1,19 +1,14 @@
-from telegram import Update
-from telegram.ext import ContextTypes
 from functions.get_crypto_data import get_crypto_data
+from functions.reply_text import reply_text
 
 
-# command to get the circulating and total supply of a cryptocurrency
-async def supply(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    # get the crypto name from the message
-    crypto = update.message.text.split()[1]
+async def supply(chat_id: str, crypto) -> None:
     data = get_crypto_data(crypto)
 
     if data:
-        await update.message.reply_text(
-            f'The circulating supply of {crypto} is {data["circulating_supply"]}, and the total supply is {data["total_supply"]}.'
+        reply_text(
+            chat_id,
+            f'The circulating supply of {crypto} is {data["circulating_supply"]}, and the total supply is {data["total_supply"]}.',
         )
     else:
-        await update.message.reply_text(
-            f"Sorry, data on {crypto} isn't available right now"
-        )
+        reply_text(chat_id, f"Sorry, data on {crypto} isn't available right now")

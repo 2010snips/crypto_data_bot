@@ -1,19 +1,14 @@
-from telegram import Update
-from telegram.ext import ContextTypes
 from functions.get_crypto_data import get_crypto_data
+from functions.reply_text import reply_text
 
 
-# command to get the data of a coin or token
-async def data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    # get the crypto name from the message
-    crypto = update.message.text.split()[1]
+async def data(chat_id: str, crypto: str) -> None:
     data = get_crypto_data(crypto)
 
     if data:
-        await update.message.reply_text(
-            f'The current price of {crypto} is ${data["current_price"]}. The price change in the last 24 hours is {data["price_change_percentage_24h"]}%.\nThe market cap is ${data["market_cap"]}.\nThe total volume in the last 24 hours is ${data["total_volume"]}.'
+        reply_text(
+            chat_id,
+            f'The current price of {crypto} is ${data["current_price"]}. The price change in the last 24 hours is {data["price_change_percentage_24h"]}%.\nThe market cap is ${data["market_cap"]}.\nThe total volume in the last 24 hours is ${data["total_volume"]}.',
         )
     else:
-        await update.message.reply_text(
-            f"Sorry, data on {crypto} isn't available right now"
-        )
+        reply_text(chat_id, f"Sorry, data on {crypto} isn't available right now")
