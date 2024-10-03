@@ -1,30 +1,30 @@
-import requests
 from dotenv import load_dotenv
 import os
+import aiohttp
 
 load_dotenv()
 
 api_key = os.getenv("CG_KEY")
 
-def get_crypto_data(crypto: str) -> dict | None:
+
+async def get_crypto_data(crypto: str) -> dict | None:
     try:
-        response = requests.get(
-            f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids={crypto}&api_key={api_key}"
-        )
-        response.raise_for_status()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(
+                f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids={crypto}&api_key={api_key}"
+            ) as response:
+                response.raise_for_status()
 
-        data: dict = response.json()[0]
+                data: dict = response.json()[0]
 
-        # because sometimes it returns an empty list
-        if data:
-            return data
-        else:
-            raise Exception()
-    except requests.exceptions.HTTPError as errh:
-        print("Http Error:", errh)
-    except requests.exceptions.ConnectionError as errc:
-        print("Error connecting:", errc)
-    except requests.exceptions.Timeout as errt:
-        print("Timeout error:", errt)
-    except (requests.exceptions.RequestException, Exception) as err:
-        print("Something went wrong", err)
+                # because sometimes it returns an empty list
+                if data:
+                    return data
+                else:
+                    raise Exception()
+    except aiohttp.ClientResponseError as err:
+        print(f"HTTP Error: {err.status} - {err.message}")
+    except aiohttp.ClientError as err:
+        print("Client Error:", err)
+    except Exception as err:
+        print("Something went wrong:", err)

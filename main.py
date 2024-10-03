@@ -31,26 +31,26 @@ wrong_command_message = "wrong command"
 
 
 @app.route("/webhook", methods=["POST"])
-def webhook():
+async def webhook():
     json_data = request.get_json()
     chat_id, text = message_parser(json_data)
     message: list = text.split()
 
     if text == "/start":
-        start(chat_id)
+        await start(chat_id)
     elif text == "/top10":
-        display_top_10_cryptos(chat_id)
+        await display_top_10_cryptos(chat_id)
     elif len(message) == 2:
         command = message[0]
         query = message[1]
 
         if command == "/data":
-            data(chat_id, query)
+            await data(chat_id, query)
         elif command == "/highlow":
-            high_low(chat_id, query)
+            await high_low(chat_id, query)
         elif command == "/supply":
-            supply(chat_id, query)
+            await supply(chat_id, query)
 
     else:
-        reply_text(chat_id, wrong_command_message)
+        await reply_text(chat_id, wrong_command_message)
     return "ok"

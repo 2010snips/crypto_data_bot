@@ -1,7 +1,7 @@
 from functions.reply_text import reply_text
 
 
-def start(chatId: str) -> None:
+async def start(chatId: str) -> None:
     welcome_message = (
         "Hello! I am CoinInfoFetch Bot. I provide real-time data for any cryptocurrency.\n\n"
         "Commands:\n"
@@ -12,4 +12,4 @@ def start(chatId: str) -> None:
         "NOTE: if the coin's name is more than 1 word, use '-' to chain the words e.g. '/data akita-inu'"
     )
 
-    reply_text(chatId, welcome_message)
+    await reply_text(chatId, welcome_message)
