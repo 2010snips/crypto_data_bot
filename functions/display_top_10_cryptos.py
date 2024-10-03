@@ -2,7 +2,7 @@ from functions.get_top_10_cryptos import get_top_10_cryptos
 from functions.reply_text import reply_text
 
 
-async def display_top_10_cryptos(chat_id: str) -> None:
+def display_top_10_cryptos(chat_id: str) -> None:
     data: list = get_top_10_cryptos()
 
     if data:

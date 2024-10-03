@@ -2,7 +2,7 @@ from functions.get_crypto_data import get_crypto_data
 from functions.reply_text import reply_text
 
 
-async def supply(chat_id: str, crypto) -> None:
+def supply(chat_id: str, crypto) -> None:
     data = get_crypto_data(crypto)
 
     if data:

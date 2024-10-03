@@ -1,7 +1,7 @@
 from functions.reply_text import reply_text
 
 
-async def start(chatId: str) -> None:
+def start(chatId: str) -> None:
     welcome_message = (
         "Hello! I am CoinInfoFetch Bot. I provide real-time data for any cryptocurrency.\n\n"
         "Commands:\n"

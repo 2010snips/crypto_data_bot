@@ -31,7 +31,7 @@ wrong_command_message = "wrong command"
 
 
 @app.route("/webhook", methods=["POST"])
-async def webhook():
+def webhook():
     json_data = request.get_json()
     chat_id, text = message_parser(json_data)
     message: list = text.split()

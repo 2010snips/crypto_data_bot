@@ -2,7 +2,7 @@ from functions.get_crypto_data import get_crypto_data
 from functions.reply_text import reply_text
 
 
-async def high_low(chat_id: str, crypto: str) -> None:
+def high_low(chat_id: str, crypto: str) -> None:
     data: dict = get_crypto_data(crypto)
 
     if data:
