@@ -15,11 +15,10 @@ async def get_crypto_data(crypto: str) -> dict | None:
             ) as response:
                 response.raise_for_status()
 
-                data: dict = await response.json()[0]
+                data: dict = await response.json()
 
-                # because sometimes it returns an empty list
-                if data:
-                    return data
+                if data and data[0]:
+                    return data[0]
                 else:
                     raise Exception()
     except aiohttp.ClientResponseError as err:
